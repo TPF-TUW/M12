@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XtraForm1));
-            DevExpress.DataAccess.Json.CustomJsonSource customJsonSource21 = new DevExpress.DataAccess.Json.CustomJsonSource();
-            DevExpress.DataAccess.Json.JsonSchemaNode jsonSchemaNode61 = new DevExpress.DataAccess.Json.JsonSchemaNode("root", true, DevExpress.DataAccess.Json.JsonNodeType.Array);
-            DevExpress.DataAccess.Json.JsonSchemaNode jsonSchemaNode62 = new DevExpress.DataAccess.Json.JsonSchemaNode("ID", true, DevExpress.DataAccess.Json.JsonNodeType.Property, typeof(System.Nullable<long>));
-            DevExpress.DataAccess.Json.JsonSchemaNode jsonSchemaNode63 = new DevExpress.DataAccess.Json.JsonSchemaNode("NAME", true, DevExpress.DataAccess.Json.JsonNodeType.Property, typeof(string));
+            DevExpress.DataAccess.Json.CustomJsonSource customJsonSource2 = new DevExpress.DataAccess.Json.CustomJsonSource();
+            DevExpress.DataAccess.Json.JsonSchemaNode jsonSchemaNode4 = new DevExpress.DataAccess.Json.JsonSchemaNode("root", true, DevExpress.DataAccess.Json.JsonNodeType.Array);
+            DevExpress.DataAccess.Json.JsonSchemaNode jsonSchemaNode5 = new DevExpress.DataAccess.Json.JsonSchemaNode("ID", true, DevExpress.DataAccess.Json.JsonNodeType.Property, typeof(System.Nullable<long>));
+            DevExpress.DataAccess.Json.JsonSchemaNode jsonSchemaNode6 = new DevExpress.DataAccess.Json.JsonSchemaNode("NAME", true, DevExpress.DataAccess.Json.JsonNodeType.Property, typeof(string));
             this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bbiPrintPreview = new DevExpress.XtraBars.BarButtonItem();
             this.bsiRecordsCount = new DevExpress.XtraBars.BarStaticItem();
@@ -538,14 +539,14 @@
             // jsonDataSource1
             // 
             this.jsonDataSource1.ConnectionName = null;
-            customJsonSource21.Json = " [{\r\n \t\"ID\": 0,\r\n \t\"NAME\": \"Finished Good\"\r\n }, {\r\n \t\"ID\": 1,\r\n \t\"NAME\": \"Fabric\"" +
+            customJsonSource2.Json = " [{\r\n \t\"ID\": 0,\r\n \t\"NAME\": \"Finished Good\"\r\n }, {\r\n \t\"ID\": 1,\r\n \t\"NAME\": \"Fabric\"" +
     "\r\n }, {\r\n \t\"ID\": 2,\r\n \t\"NAME\": \"Accessory\"\r\n }, {\r\n \t\"ID\": 3,\r\n \t\"NAME\": \"Packag" +
     "ing\"\r\n }]";
-            this.jsonDataSource1.JsonSource = customJsonSource21;
+            this.jsonDataSource1.JsonSource = customJsonSource2;
             this.jsonDataSource1.Name = "jsonDataSource1";
-            jsonSchemaNode61.Nodes.Add(jsonSchemaNode62);
-            jsonSchemaNode61.Nodes.Add(jsonSchemaNode63);
-            this.jsonDataSource1.Schema = jsonSchemaNode61;
+            jsonSchemaNode4.Nodes.Add(jsonSchemaNode5);
+            jsonSchemaNode4.Nodes.Add(jsonSchemaNode6);
+            this.jsonDataSource1.Schema = jsonSchemaNode4;
             // 
             // gridLookUpEdit1View
             // 
@@ -763,6 +764,8 @@
             this.glueCode.Size = new System.Drawing.Size(153, 20);
             this.glueCode.StyleController = this.layoutControl1;
             this.glueCode.TabIndex = 0;
+            this.glueCode.ProcessNewValue += new DevExpress.XtraEditors.Controls.ProcessNewValueEventHandler(this.glueCode_ProcessNewValue);
+            this.glueCode.Closed += new DevExpress.XtraEditors.Controls.ClosedEventHandler(this.glueCode_Closed);
             this.glueCode.EditValueChanged += new System.EventHandler(this.glueCode_EditValueChanged);
             this.glueCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.glueCode_KeyDown);
             this.glueCode.LostFocus += new System.EventHandler(this.glueCode_LostFocus);

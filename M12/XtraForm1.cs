@@ -14,6 +14,7 @@ namespace M12
     public partial class XtraForm1 : DevExpress.XtraBars.Ribbon.RibbonForm
     {
         private Functionality.Function FUNC = new Functionality.Function();
+        private string selCode = "";
         public XtraForm1()
         {
             InitializeComponent();
@@ -41,6 +42,9 @@ namespace M12
 
         private void XtraForm1_Load(object sender, EventArgs e)
         {
+            glueCode.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
+            glueCode.Properties.AcceptEditorTextAsNewValue = DevExpress.Utils.DefaultBoolean.True;
+
             bbiNew.PerformClick();
         }
 
@@ -50,8 +54,6 @@ namespace M12
             //Vendor
             sbSQL.Append("SELECT Code, Name ");
             sbSQL.Append("FROM  Vendor ");
-            sbSQL.Append("UNION ALL ");
-            sbSQL.Append("SELECT N'' AS Code, N'' AS Name ");
             sbSQL.Append("ORDER BY Code, Name ");
             new ObjDevEx.setGridLookUpEdit(glueCode, sbSQL, "Code", "Code").getData(true);
 
@@ -80,10 +82,6 @@ namespace M12
 
             //Vendor Detail
             sbSQL.Clear();
-            //sbSQL.Append("SELECT OIDVEND AS No, Code, Name, Contacts, Email, Address1, Address2, Address3, City, Country, TelephoneNo, FaxNo, VendorType, CalendarNo, PaymentTerm, PaymentCurrency, ");
-            //sbSQL.Append("       POCancelPeriod, DeliveryLeadtime, VendorEvaluation, Remark1, Remark2, CreatedBy, CreatedDate, UpdatedBy, UpdatedDate ");
-            //sbSQL.Append("FROM   Vendor ");
-            //sbSQL.Append("ORDER BY OIDVEND ");
             sbSQL.Append("SELECT    A.OIDVEND AS No, A.Code, A.Name, A.ShotName, A.Contacts, A.Email, A.Address1, A.Address2, A.Address3, A.City, A.Country, A.TelephoneNo, A.FaxNo, A.VendorType, E.VenderTypeName, A.PaymentTerm AS PaymentTermID, ");
             sbSQL.Append("          B.Name AS PaymentTermName, A.PaymentCurrency AS CurrencyID, C.Currency AS CurrencyName, A.VendorEvaluation, A.CalendarNo, D.CompanyType, D.CompanyName, A.ProductionLeadTime, A.DeliveryLeadtime, A.ArrivalLeadTime, A.POCancelPeriod, A.Remark1, A.Remark2, A.CreatedBy, ");
             sbSQL.Append("          A.CreatedDate, A.UpdatedBy, A.UpdatedDate ");
@@ -140,7 +138,7 @@ namespace M12
             txeCDATE.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
             txeUPDATE.Text = "0";
             txeUDATE.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-
+            selCode = "";
             ////txeID.Focus();
         }
 
@@ -173,8 +171,8 @@ namespace M12
 
         private void glueCode_EditValueChanged(object sender, EventArgs e)
         {
-            txeName.Focus();
-            LoadCode(glueCode.Text);
+            //txeName.Focus();
+            //LoadCode(glueCode.Text);
         }
 
         private void glueCode_KeyDown(object sender, KeyEventArgs e)
@@ -187,33 +185,39 @@ namespace M12
 
         private void glueCode_LostFocus(object sender, EventArgs e)
         {
-            string gCode = glueCode.Text.ToUpper().Trim();
-
-            if (glueCode.Text != "")
+            if (glueCode.Text.Trim() != "" && glueCode.Text.ToUpper().Trim() != selCode)
             {
-                StringBuilder sbSQLx = new StringBuilder();
-                sbSQLx.Append("SELECT OIDVEND FROM Vendor WHERE (Code=N'" + gCode.Replace("'", "''") + "') ");
-                string chkCode = new DBQuery(sbSQLx).getString();
-
-                if (chkCode == "")
-                {
-                    sbSQLx.Clear();
-                    sbSQLx.Append("SELECT Code, Name ");
-                    sbSQLx.Append("FROM  Vendor ");
-                    sbSQLx.Append("UNION ALL ");
-                    sbSQLx.Append("SELECT N'' AS Code, N'' AS Name ");
-                    sbSQLx.Append("UNION ALL ");
-                    sbSQLx.Append("SELECT N'" + gCode.Replace("'", "''") + "' AS Code, N'' AS Name ");
-                    sbSQLx.Append("ORDER BY Code, Name ");
-                    new ObjDevEx.setGridLookUpEdit(glueCode, sbSQLx, "Code", "Code").getData(true);
-
-                    if (gCode != "")
-                    {
-                        glueCode.Text = gCode;
-                    }
-                }
-
+                glueCode.Text = glueCode.Text.ToUpper().Trim();
+                selCode = glueCode.Text;
+                LoadCode(glueCode.Text);
             }
+            //string gCode = glueCode.Text.ToUpper().Trim();
+
+            //if (glueCode.Text != "")
+            //{
+            //    StringBuilder sbSQLx = new StringBuilder();
+            //    sbSQLx.Append("SELECT OIDVEND FROM Vendor WHERE (Code=N'" + gCode.Replace("'", "''") + "') ");
+            //    string chkCode = new DBQuery(sbSQLx).getString();
+
+            //    if (chkCode == "")
+            //    {
+            //        sbSQLx.Clear();
+            //        sbSQLx.Append("SELECT Code, Name ");
+            //        sbSQLx.Append("FROM  Vendor ");
+            //        sbSQLx.Append("UNION ALL ");
+            //        sbSQLx.Append("SELECT N'' AS Code, N'' AS Name ");
+            //        sbSQLx.Append("UNION ALL ");
+            //        sbSQLx.Append("SELECT N'" + gCode.Replace("'", "''") + "' AS Code, N'' AS Name ");
+            //        sbSQLx.Append("ORDER BY Code, Name ");
+            //        new ObjDevEx.setGridLookUpEdit(glueCode, sbSQLx, "Code", "Code").getData(true);
+
+            //        if (gCode != "")
+            //        {
+            //            glueCode.Text = gCode;
+            //        }
+            //    }
+
+            //}
 
         }
 
@@ -247,6 +251,8 @@ namespace M12
             txeCDATE.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
             txeUPDATE.Text = "0";
             txeUDATE.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+            selCode = "";
+            txeName.Focus();
 
             StringBuilder sbSQL = new StringBuilder();
             sbSQL.Append("SELECT TOP (1) OIDVEND, Code, Name, ShotName, Contacts, Email, Address1, Address2, Address3, Country, TelephoneNo, FaxNo, VendorType, PaymentTerm, PaymentCurrency, VendorEvaluation, CalendarNo,  ");
@@ -612,6 +618,20 @@ namespace M12
             {
                 txeCREATE.Focus();
             }
+        }
+
+        private void glueCode_Closed(object sender, DevExpress.XtraEditors.Controls.ClosedEventArgs e)
+        {
+            glueCode.Focus();
+            txeName.Focus();
+        }
+
+        private void glueCode_ProcessNewValue(object sender, DevExpress.XtraEditors.Controls.ProcessNewValueEventArgs e)
+        {
+            GridLookUpEdit gridLookup = sender as GridLookUpEdit;
+            if (e.DisplayValue == null) return;
+            string newValue = e.DisplayValue.ToString();
+            if (newValue == String.Empty) return;
         }
     }
 }
