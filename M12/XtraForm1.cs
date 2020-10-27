@@ -295,7 +295,7 @@ namespace M12
             string strCHKID = new DBQuery(sbSQL).getString();
             if (strCHKID == "")
             {
-                lblStatus.Text = "* New Vendor";
+                lblStatus.Text = "* Add Vendor";
                 lblStatus.ForeColor = Color.Green;
             }
             else
@@ -428,21 +428,37 @@ namespace M12
                         strUPDATE = txeUPDATE.Text.Trim();
                     }
 
-                    sbSQL.Append("IF NOT EXISTS(SELECT Code FROM Vendor WHERE Code = N'" + glueCode.Text.Trim().Replace("'", "''") + "') ");
-                    sbSQL.Append(" BEGIN ");
-                    sbSQL.Append("  INSERT INTO Vendor(Code, Name, ShotName, Contacts, Email, Address1, Address2, Address3, City, Country, TelephoneNo, FaxNo, VendorType, PaymentTerm, PaymentCurrency, VendorEvaluation, CalendarNo, ProductionLeadTime, DeliveryLeadtime, ArrivalLeadTime, POCancelPeriod, Remark1, Remark2, CreatedBy, CreatedDate, UpdatedBy, UpdatedDate) ");
-                    sbSQL.Append("  VALUES(N'" + glueCode.Text.Trim().Replace("'", "''") + "', N'" + txeName.Text.Trim().Replace("'", "''") + "', N'" + txeShortName.Text.Trim().Replace("'", "''") + "', N'" + txeContact.Text.Trim().Replace("'", "''") + "', N'" + txeEmail.Text.Trim() + "', N'" + txeAddr1.Text.Trim() + "', N'" + txeAddr2.Text.Trim() + "', N'" + txeAddr3.Text.Trim() + "', N'', N'" + txeCountry.Text.Trim() + "', N'" + txeTel.Text.Trim() + "', ");
-                    sbSQL.Append("         N'" + txeFax.Text.Trim() + "', '" + glueVendor.EditValue.ToString() + "', '" + slueTerm.EditValue.ToString() + "', '" + glueCurrency.EditValue.ToString() + "',  N'" + txeEval.Text.Trim() + "', '" + glueCalendar.EditValue.ToString() + "', '" + spePLT.Value.ToString() + "', '" + speDLT.Value.ToString() + "', '" + speALT.Value.ToString() + "', '" + spePCP.Value.ToString() + "', N'', N'', '" + strCREATE + "', GETDATE(), '" + strUPDATE + "', GETDATE()) ");
-                    sbSQL.Append(" END ");
-                    sbSQL.Append("ELSE ");
-                    sbSQL.Append(" BEGIN ");
-                    sbSQL.Append("  UPDATE Vendor SET ");
-                    sbSQL.Append("      Code=N'" + glueCode.Text.Trim().Replace("'", "''") + "', Name=N'" + txeName.Text.Trim().Replace("'", "''") + "', ShotName=N'" + txeShortName.Text.Trim().Replace("'", "''") + "', Contacts=N'" + txeContact.Text.Trim().Replace("'", "''") + "', Email=N'" + txeEmail.Text.Trim() + "', Address1=N'" + txeAddr1.Text.Trim() + "', ");
-                    sbSQL.Append("      Address2=N'" + txeAddr2.Text.Trim() + "', Address3=N'" + txeAddr3.Text.Trim() + "', City=N'', Country=N'" + txeCountry.Text.Trim() + "', TelephoneNo=N'" + txeTel.Text.Trim() + "', FaxNo = N'" + txeFax.Text.Trim() + "', VendorType = '" + glueVendor.EditValue.ToString() + "', PaymentTerm = '" + slueTerm.EditValue.ToString() + "', ");
-                    sbSQL.Append("      PaymentCurrency = '" + glueCurrency.EditValue.ToString() + "', VendorEvaluation = N'" + txeEval.Text.Trim() + "', CalendarNo = '" + glueCalendar.EditValue.ToString() + "', ProductionLeadTime = '" + spePLT.Value.ToString() + "', DeliveryLeadtime = '" + speDLT.Value.ToString() + "', ArrivalLeadTime = '" + speALT.Value.ToString() + "', ");
-                    sbSQL.Append("      POCancelPeriod = '" + spePCP.Value.ToString() + "', Remark1 = N'', Remark2 = N'', UpdatedBy = '" + strUPDATE + "', UpdatedDate = GETDATE() ");
-                    sbSQL.Append("  WHERE(OIDVEND = '" + txeID.Text.Trim() + "') ");
-                    sbSQL.Append(" END ");
+                    if (lblStatus.Text == "* Add Vendor")
+                    {
+                        sbSQL.Append("  INSERT INTO Vendor(Code, Name, ShotName, Contacts, Email, Address1, Address2, Address3, City, Country, TelephoneNo, FaxNo, VendorType, PaymentTerm, PaymentCurrency, VendorEvaluation, CalendarNo, ProductionLeadTime, DeliveryLeadtime, ArrivalLeadTime, POCancelPeriod, Remark1, Remark2, CreatedBy, CreatedDate, UpdatedBy, UpdatedDate) ");
+                        sbSQL.Append("  VALUES(N'" + glueCode.Text.Trim().Replace("'", "''") + "', N'" + txeName.Text.Trim().Replace("'", "''") + "', N'" + txeShortName.Text.Trim().Replace("'", "''") + "', N'" + txeContact.Text.Trim().Replace("'", "''") + "', N'" + txeEmail.Text.Trim() + "', N'" + txeAddr1.Text.Trim() + "', N'" + txeAddr2.Text.Trim() + "', N'" + txeAddr3.Text.Trim() + "', N'', N'" + txeCountry.Text.Trim() + "', N'" + txeTel.Text.Trim() + "', ");
+                        sbSQL.Append("         N'" + txeFax.Text.Trim() + "', '" + glueVendor.EditValue.ToString() + "', '" + slueTerm.EditValue.ToString() + "', '" + glueCurrency.EditValue.ToString() + "',  N'" + txeEval.Text.Trim() + "', '" + glueCalendar.EditValue.ToString() + "', '" + spePLT.Value.ToString() + "', '" + speDLT.Value.ToString() + "', '" + speALT.Value.ToString() + "', '" + spePCP.Value.ToString() + "', N'', N'', '" + strCREATE + "', GETDATE(), '" + strUPDATE + "', GETDATE()) ");
+                    }
+                    else if (lblStatus.Text == "* Edit Vendor")
+                    {
+                        sbSQL.Append("  UPDATE Vendor SET ");
+                        sbSQL.Append("      Code=N'" + glueCode.Text.Trim().Replace("'", "''") + "', Name=N'" + txeName.Text.Trim().Replace("'", "''") + "', ShotName=N'" + txeShortName.Text.Trim().Replace("'", "''") + "', Contacts=N'" + txeContact.Text.Trim().Replace("'", "''") + "', Email=N'" + txeEmail.Text.Trim() + "', Address1=N'" + txeAddr1.Text.Trim() + "', ");
+                        sbSQL.Append("      Address2=N'" + txeAddr2.Text.Trim() + "', Address3=N'" + txeAddr3.Text.Trim() + "', City=N'', Country=N'" + txeCountry.Text.Trim() + "', TelephoneNo=N'" + txeTel.Text.Trim() + "', FaxNo = N'" + txeFax.Text.Trim() + "', VendorType = '" + glueVendor.EditValue.ToString() + "', PaymentTerm = '" + slueTerm.EditValue.ToString() + "', ");
+                        sbSQL.Append("      PaymentCurrency = '" + glueCurrency.EditValue.ToString() + "', VendorEvaluation = N'" + txeEval.Text.Trim() + "', CalendarNo = '" + glueCalendar.EditValue.ToString() + "', ProductionLeadTime = '" + spePLT.Value.ToString() + "', DeliveryLeadtime = '" + speDLT.Value.ToString() + "', ArrivalLeadTime = '" + speALT.Value.ToString() + "', ");
+                        sbSQL.Append("      POCancelPeriod = '" + spePCP.Value.ToString() + "', Remark1 = N'', Remark2 = N'', UpdatedBy = '" + strUPDATE + "', UpdatedDate = GETDATE() ");
+                        sbSQL.Append("  WHERE(OIDVEND = '" + txeID.Text.Trim() + "') ");
+                    }
+
+                    //sbSQL.Append("IF NOT EXISTS(SELECT Code FROM Vendor WHERE Code = N'" + glueCode.Text.Trim().Replace("'", "''") + "') ");
+                    //sbSQL.Append(" BEGIN ");
+                    //sbSQL.Append("  INSERT INTO Vendor(Code, Name, ShotName, Contacts, Email, Address1, Address2, Address3, City, Country, TelephoneNo, FaxNo, VendorType, PaymentTerm, PaymentCurrency, VendorEvaluation, CalendarNo, ProductionLeadTime, DeliveryLeadtime, ArrivalLeadTime, POCancelPeriod, Remark1, Remark2, CreatedBy, CreatedDate, UpdatedBy, UpdatedDate) ");
+                    //sbSQL.Append("  VALUES(N'" + glueCode.Text.Trim().Replace("'", "''") + "', N'" + txeName.Text.Trim().Replace("'", "''") + "', N'" + txeShortName.Text.Trim().Replace("'", "''") + "', N'" + txeContact.Text.Trim().Replace("'", "''") + "', N'" + txeEmail.Text.Trim() + "', N'" + txeAddr1.Text.Trim() + "', N'" + txeAddr2.Text.Trim() + "', N'" + txeAddr3.Text.Trim() + "', N'', N'" + txeCountry.Text.Trim() + "', N'" + txeTel.Text.Trim() + "', ");
+                    //sbSQL.Append("         N'" + txeFax.Text.Trim() + "', '" + glueVendor.EditValue.ToString() + "', '" + slueTerm.EditValue.ToString() + "', '" + glueCurrency.EditValue.ToString() + "',  N'" + txeEval.Text.Trim() + "', '" + glueCalendar.EditValue.ToString() + "', '" + spePLT.Value.ToString() + "', '" + speDLT.Value.ToString() + "', '" + speALT.Value.ToString() + "', '" + spePCP.Value.ToString() + "', N'', N'', '" + strCREATE + "', GETDATE(), '" + strUPDATE + "', GETDATE()) ");
+                    //sbSQL.Append(" END ");
+                    //sbSQL.Append("ELSE ");
+                    //sbSQL.Append(" BEGIN ");
+                    //sbSQL.Append("  UPDATE Vendor SET ");
+                    //sbSQL.Append("      Code=N'" + glueCode.Text.Trim().Replace("'", "''") + "', Name=N'" + txeName.Text.Trim().Replace("'", "''") + "', ShotName=N'" + txeShortName.Text.Trim().Replace("'", "''") + "', Contacts=N'" + txeContact.Text.Trim().Replace("'", "''") + "', Email=N'" + txeEmail.Text.Trim() + "', Address1=N'" + txeAddr1.Text.Trim() + "', ");
+                    //sbSQL.Append("      Address2=N'" + txeAddr2.Text.Trim() + "', Address3=N'" + txeAddr3.Text.Trim() + "', City=N'', Country=N'" + txeCountry.Text.Trim() + "', TelephoneNo=N'" + txeTel.Text.Trim() + "', FaxNo = N'" + txeFax.Text.Trim() + "', VendorType = '" + glueVendor.EditValue.ToString() + "', PaymentTerm = '" + slueTerm.EditValue.ToString() + "', ");
+                    //sbSQL.Append("      PaymentCurrency = '" + glueCurrency.EditValue.ToString() + "', VendorEvaluation = N'" + txeEval.Text.Trim() + "', CalendarNo = '" + glueCalendar.EditValue.ToString() + "', ProductionLeadTime = '" + spePLT.Value.ToString() + "', DeliveryLeadtime = '" + speDLT.Value.ToString() + "', ArrivalLeadTime = '" + speALT.Value.ToString() + "', ");
+                    //sbSQL.Append("      POCancelPeriod = '" + spePCP.Value.ToString() + "', Remark1 = N'', Remark2 = N'', UpdatedBy = '" + strUPDATE + "', UpdatedDate = GETDATE() ");
+                    //sbSQL.Append("  WHERE(OIDVEND = '" + txeID.Text.Trim() + "') ");
+                    //sbSQL.Append(" END ");
                     //MessageBox.Show(sbSQL.ToString());
                     if (sbSQL.Length > 0)
                     {
