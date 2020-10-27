@@ -71,12 +71,12 @@ namespace M12
 
             //Calendar No.
             sbSQL.Clear();
-            sbSQL.Append("SELECT OIDCALENDAR AS No, 'Vendor' AS CompanyType, CompanyName, Year  ");
+            sbSQL.Append("SELECT CompanyName AS VendorName, Year, OIDCALENDAR AS No  ");
             sbSQL.Append("FROM CalendarMaster C  ");
             sbSQL.Append("CROSS APPLY(SELECT Name AS CompanyName FROM Vendor WHERE OIDVEND = C.OIDCompany) D  ");
             sbSQL.Append("WHERE CompanyType = 2  ");
-            sbSQL.Append("ORDER BY Year DESC, CompanyType, CompanyName, OIDCALENDAR  ");
-            new ObjDevEx.setGridLookUpEdit(glueCalendar, sbSQL, "CompanyName", "No").getData(true);
+            sbSQL.Append("ORDER BY Year DESC, CompanyName, OIDCALENDAR  ");
+            new ObjDevEx.setGridLookUpEdit(glueCalendar, sbSQL, "VendorName", "No").getData(true);
 
             //Vendor Detail
             sbSQL.Clear();
