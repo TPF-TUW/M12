@@ -190,6 +190,7 @@ namespace M12
                 glueCode.Text = glueCode.Text.ToUpper().Trim();
                 selCode = glueCode.Text;
                 LoadCode(glueCode.Text);
+                //MessageBox.Show(glueCode.Text);
             }
             //string gCode = glueCode.Text.ToUpper().Trim();
 
@@ -251,7 +252,7 @@ namespace M12
             txeCDATE.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
             txeUPDATE.Text = "0";
             txeUDATE.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-            selCode = "";
+            //selCode = "";
             txeName.Focus();
 
             StringBuilder sbSQL = new StringBuilder();
