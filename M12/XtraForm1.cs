@@ -71,15 +71,6 @@ namespace M12
 
             //Calendar No.
             sbSQL.Clear();
-            sbSQL.Append("SELECT OIDCALENDAR AS No, 'Thai Parfun' AS CompanyType, 'Thai Parfun' AS CompanyName, Year  ");
-            sbSQL.Append("FROM CalendarMaster  ");
-            sbSQL.Append("WHERE CompanyType = 0  ");
-            sbSQL.Append("UNION ALL  ");
-            sbSQL.Append("SELECT OIDCALENDAR AS No, 'Customer' AS CompanyType, CompanyName, Year  ");
-            sbSQL.Append("FROM CalendarMaster A  ");
-            sbSQL.Append("CROSS APPLY(SELECT ShortName AS CompanyName FROM Customer WHERE OIDCUST = A.OIDCompany) B  ");
-            sbSQL.Append("WHERE CompanyType = 1  ");
-            sbSQL.Append("UNION ALL  ");
             sbSQL.Append("SELECT OIDCALENDAR AS No, 'Vendor' AS CompanyType, CompanyName, Year  ");
             sbSQL.Append("FROM CalendarMaster C  ");
             sbSQL.Append("CROSS APPLY(SELECT Name AS CompanyName FROM Vendor WHERE OIDVEND = C.OIDCompany) D  ");
@@ -99,18 +90,9 @@ namespace M12
             sbSQL.Append("FROM      Vendor AS A LEFT OUTER JOIN ");
             sbSQL.Append("          PaymentTerm AS B ON A.PaymentTerm = B.OIDPayment LEFT OUTER JOIN ");
             sbSQL.Append("          Currency AS C ON A.PaymentCurrency = C.OIDCURR LEFT OUTER JOIN ");
-            sbSQL.Append("          (SELECT OIDCALENDAR AS No, 'Thai Parfun' AS CompanyType, 'Thai Parfun' AS CompanyName, Year ");
-            sbSQL.Append("           FROM   CalendarMaster ");
-            sbSQL.Append("           WHERE  CompanyType = 0 ");
-            sbSQL.Append("           UNION ALL ");
-            sbSQL.Append("           SELECT OIDCALENDAR AS No, 'Customer' AS CompanyType, CompanyName, Year ");
-            sbSQL.Append("           FROM   CalendarMaster A ");
-            sbSQL.Append("           CROSS APPLY(SELECT ShortName AS CompanyName FROM Customer WHERE OIDCUST = A.OIDCompany) B ");
-            sbSQL.Append("           WHERE  CompanyType = 1 ");
-            sbSQL.Append("           UNION ALL ");
-            sbSQL.Append("           SELECT OIDCALENDAR AS No, 'Vendor' AS CompanyType, CompanyName, Year ");
-            sbSQL.Append("           FROM   CalendarMaster C ");
-            sbSQL.Append("                  CROSS APPLY(SELECT Name AS CompanyName FROM Vendor WHERE OIDVEND = C.OIDCompany) D ");
+            sbSQL.Append("          (SELECT OIDCALENDAR AS No, 'Vendor' AS CompanyType, CompanyName, Year ");
+            sbSQL.Append("           FROM   CalendarMaster CX ");
+            sbSQL.Append("                  CROSS APPLY(SELECT Name AS CompanyName FROM Vendor WHERE OIDVEND = CX.OIDCompany) D ");
             sbSQL.Append("           WHERE CompanyType = 2) AS D ON A.CalendarNo = D.No LEFT OUTER JOIN ");
             sbSQL.Append("          (SELECT '0' AS VendorType, 'Finished Good' AS VenderTypeName ");
             sbSQL.Append("           UNION ALL ");
