@@ -314,64 +314,7 @@ namespace M12
 
         private void gvVendor_RowCellClick(object sender, RowCellClickEventArgs e)
         {
-            lblStatus.Text = "* Edit Vendor";
-            lblStatus.ForeColor = Color.Red;
-
-            txeID.Text = gvVendor.GetFocusedRowCellValue("No").ToString();
-            glueCode.EditValue = gvVendor.GetFocusedRowCellValue("Code").ToString();
-            txeName.Text = gvVendor.GetFocusedRowCellValue("Name").ToString();
-            txeShortName.Text = gvVendor.GetFocusedRowCellValue("ShotName").ToString();
-            txeContact.Text = gvVendor.GetFocusedRowCellValue("Contacts").ToString();
-            txeEmail.Text = gvVendor.GetFocusedRowCellValue("Email").ToString();
-            txeAddr1.Text = gvVendor.GetFocusedRowCellValue("Address1").ToString();
-            txeAddr2.Text = gvVendor.GetFocusedRowCellValue("Address2").ToString();
-            txeAddr3.Text = gvVendor.GetFocusedRowCellValue("Address3").ToString();
-            txeCountry.Text = gvVendor.GetFocusedRowCellValue("Country").ToString();
-            txeTel.Text = gvVendor.GetFocusedRowCellValue("TelephoneNo").ToString();
-            txeFax.Text = gvVendor.GetFocusedRowCellValue("FaxNo").ToString();
-
-            glueVendor.EditValue = gvVendor.GetFocusedRowCellValue("VendorType").ToString();
-            slueTerm.EditValue = gvVendor.GetFocusedRowCellValue("PaymentTermID").ToString();
-            glueCurrency.EditValue = gvVendor.GetFocusedRowCellValue("CurrencyID").ToString();
-            txeEval.Text = gvVendor.GetFocusedRowCellValue("VendorEvaluation").ToString();
-            glueCalendar.EditValue = gvVendor.GetFocusedRowCellValue("CalendarNo").ToString();
-
-            int PLT = 0;
-            if (gvVendor.GetFocusedRowCellValue("ProductionLeadTime").ToString() != "")
-            { 
-                PLT = Convert.ToInt32(gvVendor.GetFocusedRowCellValue("ProductionLeadTime").ToString());
-            }
-            spePLT.Value = PLT;
-
-            int DLT = 0;
-            if (gvVendor.GetFocusedRowCellValue("DeliveryLeadtime").ToString() != "")
-            {
-                DLT = Convert.ToInt32(gvVendor.GetFocusedRowCellValue("DeliveryLeadtime").ToString());
-            }
-            spePLT.Value = PLT;
-
-            int ALT = 0;
-            if (gvVendor.GetFocusedRowCellValue("ArrivalLeadTime").ToString() != "")
-            {
-                ALT = Convert.ToInt32(gvVendor.GetFocusedRowCellValue("ArrivalLeadTime").ToString());
-            }
-            spePLT.Value = PLT;
-
-            int PCP = 0;
-            if (gvVendor.GetFocusedRowCellValue("POCancelPeriod").ToString() != "")
-            {
-                PCP = Convert.ToInt32(gvVendor.GetFocusedRowCellValue("POCancelPeriod").ToString());
-            }
             
-            spePLT.Value = PLT;
-            speDLT.Value = DLT;
-            speALT.Value = ALT;
-            spePCP.Value = PCP;
-
-            txeCREATE.Text = gvVendor.GetFocusedRowCellValue("CreatedBy").ToString();
-            txeCDATE.Text = gvVendor.GetFocusedRowCellValue("CreatedDate").ToString();
-            txeUPDATE.Text = gvVendor.GetFocusedRowCellValue("UpdatedBy").ToString();
-            txeUDATE.Text = gvVendor.GetFocusedRowCellValue("UpdatedDate").ToString();
         }
 
         private void gvVendor_RowStyle(object sender, RowStyleEventArgs e)
@@ -614,6 +557,68 @@ namespace M12
             if (e.DisplayValue == null) return;
             string newValue = e.DisplayValue.ToString();
             if (newValue == String.Empty) return;
+        }
+
+        private void gvVendor_RowClick(object sender, RowClickEventArgs e)
+        {
+            lblStatus.Text = "* Edit Vendor";
+            lblStatus.ForeColor = Color.Red;
+
+            txeID.Text = gvVendor.GetFocusedRowCellValue("No").ToString();
+            glueCode.EditValue = gvVendor.GetFocusedRowCellValue("Code").ToString();
+            txeName.Text = gvVendor.GetFocusedRowCellValue("Name").ToString();
+            txeShortName.Text = gvVendor.GetFocusedRowCellValue("ShotName").ToString();
+            txeContact.Text = gvVendor.GetFocusedRowCellValue("Contacts").ToString();
+            txeEmail.Text = gvVendor.GetFocusedRowCellValue("Email").ToString();
+            txeAddr1.Text = gvVendor.GetFocusedRowCellValue("Address1").ToString();
+            txeAddr2.Text = gvVendor.GetFocusedRowCellValue("Address2").ToString();
+            txeAddr3.Text = gvVendor.GetFocusedRowCellValue("Address3").ToString();
+            txeCountry.Text = gvVendor.GetFocusedRowCellValue("Country").ToString();
+            txeTel.Text = gvVendor.GetFocusedRowCellValue("TelephoneNo").ToString();
+            txeFax.Text = gvVendor.GetFocusedRowCellValue("FaxNo").ToString();
+
+            glueVendor.EditValue = gvVendor.GetFocusedRowCellValue("VendorType").ToString();
+            slueTerm.EditValue = gvVendor.GetFocusedRowCellValue("PaymentTermID").ToString();
+            glueCurrency.EditValue = gvVendor.GetFocusedRowCellValue("CurrencyID").ToString();
+            txeEval.Text = gvVendor.GetFocusedRowCellValue("VendorEvaluation").ToString();
+            glueCalendar.EditValue = gvVendor.GetFocusedRowCellValue("CalendarNo").ToString();
+
+            int PLT = 0;
+            if (gvVendor.GetFocusedRowCellValue("ProductionLeadTime").ToString() != "")
+            {
+                PLT = Convert.ToInt32(gvVendor.GetFocusedRowCellValue("ProductionLeadTime").ToString());
+            }
+            spePLT.Value = PLT;
+
+            int DLT = 0;
+            if (gvVendor.GetFocusedRowCellValue("DeliveryLeadtime").ToString() != "")
+            {
+                DLT = Convert.ToInt32(gvVendor.GetFocusedRowCellValue("DeliveryLeadtime").ToString());
+            }
+            spePLT.Value = PLT;
+
+            int ALT = 0;
+            if (gvVendor.GetFocusedRowCellValue("ArrivalLeadTime").ToString() != "")
+            {
+                ALT = Convert.ToInt32(gvVendor.GetFocusedRowCellValue("ArrivalLeadTime").ToString());
+            }
+            spePLT.Value = PLT;
+
+            int PCP = 0;
+            if (gvVendor.GetFocusedRowCellValue("POCancelPeriod").ToString() != "")
+            {
+                PCP = Convert.ToInt32(gvVendor.GetFocusedRowCellValue("POCancelPeriod").ToString());
+            }
+
+            spePLT.Value = PLT;
+            speDLT.Value = DLT;
+            speALT.Value = ALT;
+            spePCP.Value = PCP;
+
+            txeCREATE.Text = gvVendor.GetFocusedRowCellValue("CreatedBy").ToString();
+            txeCDATE.Text = gvVendor.GetFocusedRowCellValue("CreatedDate").ToString();
+            txeUPDATE.Text = gvVendor.GetFocusedRowCellValue("UpdatedBy").ToString();
+            txeUDATE.Text = gvVendor.GetFocusedRowCellValue("UpdatedDate").ToString();
         }
     }
 }

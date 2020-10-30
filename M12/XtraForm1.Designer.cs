@@ -850,6 +850,7 @@
             this.gvVendor.OptionsView.EnableAppearanceEvenRow = true;
             this.gvVendor.OptionsView.EnableAppearanceOddRow = true;
             this.gvVendor.OptionsView.ShowGroupPanel = false;
+            this.gvVendor.RowClick += new DevExpress.XtraGrid.Views.Grid.RowClickEventHandler(this.gvVendor_RowClick);
             this.gvVendor.RowCellClick += new DevExpress.XtraGrid.Views.Grid.RowCellClickEventHandler(this.gvVendor_RowCellClick);
             this.gvVendor.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gvVendor_RowStyle);
             // 
