@@ -620,5 +620,15 @@ namespace M12
             txeUPDATE.Text = gvVendor.GetFocusedRowCellValue("UpdatedBy").ToString();
             txeUDATE.Text = gvVendor.GetFocusedRowCellValue("UpdatedDate").ToString();
         }
+
+        private void bbiPrintPreview_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            gcVendor.ShowPrintPreview();
+        }
+
+        private void bbiPrint_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            gcVendor.Print();
+        }
     }
 }
