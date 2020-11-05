@@ -528,6 +528,7 @@ namespace M12
 
         private void gvVendor_RowClick(object sender, RowClickEventArgs e)
         {
+            if (gvVendor.IsFilterRow(e.RowHandle)) return;
             lblStatus.Text = "* Edit Vendor";
             lblStatus.ForeColor = Color.Red;
 
