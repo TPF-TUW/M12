@@ -192,36 +192,7 @@ namespace M12
         private void LoadCode(string strCODE)
         {
             strCODE = strCODE.ToUpper().Trim();
-            txeID.Text = "";
-            txeName.Text = "";
-            txeShortName.Text = "";
-            txeContact.Text = "";
-            txeEmail.Text = "";
-            txeAddr1.Text = "";
-            txeAddr2.Text = "";
-            txeAddr3.Text = "";
-            txeCountry.Text = "";
-            txeTel.Text = "";
-            txeFax.Text = "";
-
-            glueVendor.EditValue = "";
-            slueTerm.EditValue = "";
-            glueCurrency.EditValue = "";
-            txeEval.Text = "";
-            glueCalendar.EditValue = "";
-
-            spePLT.Value = 0;
-            speDLT.Value = 0;
-            speALT.Value = 0;
-            spePCP.Value = 0;
-
-            txeCREATE.Text = "0";
-            txeCDATE.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-            txeUPDATE.Text = "0";
-            txeUDATE.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-            //selCode = "";
-            txeName.Focus();
-
+            
             StringBuilder sbSQL = new StringBuilder();
             sbSQL.Append("SELECT TOP (1) OIDVEND, Code, Name, ShotName, Contacts, Email, Address1, Address2, Address3, Country, TelephoneNo, FaxNo, VendorType, PaymentTerm, PaymentCurrency, VendorEvaluation, CalendarNo,  ");
             sbSQL.Append("       ISNULL(ProductionLeadTime, 0) AS ProductionLeadTime, ISNULL(DeliveryLeadtime, 0) AS DeliveryLeadtime, ISNULL(ArrivalLeadTime, 0) AS ArrivalLeadTime, ISNULL(POCancelPeriod, 0) AS POCancelPeriod, CreatedBy, CreatedDate, UpdatedBy, UpdatedDate ");
@@ -230,53 +201,82 @@ namespace M12
             string[] arrVendor = new DBQuery(sbSQL).getMultipleValue();
             if (arrVendor.Length > 0)
             {
-                txeID.Text = arrVendor[0];
-                lblStatus.Text = "* Edit Vendor";
-                lblStatus.ForeColor = Color.Red;
+                if(FUNC.msgQuiz("The system already has this name. Want to fix it ?") == true)
+                {
+                    txeID.Text = arrVendor[0];
+                    lblStatus.Text = "* Edit Vendor";
+                    lblStatus.ForeColor = Color.Red;
 
-                txeName.Text = arrVendor[2];
-                txeShortName.Text = arrVendor[3];
-                txeContact.Text = arrVendor[4];
-                txeEmail.Text = arrVendor[5];
-                txeAddr1.Text = arrVendor[6];
-                txeAddr2.Text = arrVendor[7];
-                txeAddr3.Text = arrVendor[8];
-                txeCountry.Text = arrVendor[9];
-                txeTel.Text = arrVendor[10];
-                txeFax.Text = arrVendor[11];
+                    txeName.Text = arrVendor[2];
+                    txeShortName.Text = arrVendor[3];
+                    txeContact.Text = arrVendor[4];
+                    txeEmail.Text = arrVendor[5];
+                    txeAddr1.Text = arrVendor[6];
+                    txeAddr2.Text = arrVendor[7];
+                    txeAddr3.Text = arrVendor[8];
+                    txeCountry.Text = arrVendor[9];
+                    txeTel.Text = arrVendor[10];
+                    txeFax.Text = arrVendor[11];
 
-                glueVendor.EditValue = arrVendor[12];
-                slueTerm.EditValue = arrVendor[13];
-                glueCurrency.EditValue = arrVendor[14];
-                txeEval.Text = arrVendor[15];
-                glueCalendar.EditValue = arrVendor[16];
+                    glueVendor.EditValue = arrVendor[12];
+                    slueTerm.EditValue = arrVendor[13];
+                    glueCurrency.EditValue = arrVendor[14];
+                    txeEval.Text = arrVendor[15];
+                    glueCalendar.EditValue = arrVendor[16];
 
-                spePLT.Value = Convert.ToInt32(arrVendor[17]);
-                speDLT.Value = Convert.ToInt32(arrVendor[18]);
-                speALT.Value = Convert.ToInt32(arrVendor[19]);
-                spePCP.Value = Convert.ToInt32(arrVendor[20]);
+                    spePLT.Value = Convert.ToInt32(arrVendor[17]);
+                    speDLT.Value = Convert.ToInt32(arrVendor[18]);
+                    speALT.Value = Convert.ToInt32(arrVendor[19]);
+                    spePCP.Value = Convert.ToInt32(arrVendor[20]);
 
-                txeCREATE.Text = arrVendor[21];
-                txeCDATE.Text = arrVendor[22];
-                txeUPDATE.Text = arrVendor[23];
-                txeUDATE.Text = arrVendor[24];
-            }
-
-
-            //Check new vendor or edit vendor
-            sbSQL.Clear();
-            sbSQL.Append("SELECT OIDVEND FROM Vendor WHERE (OIDVEND = '" + txeID.EditValue.ToString() + "') ");
-            string strCHKID = new DBQuery(sbSQL).getString();
-            if (strCHKID == "")
-            {
-                lblStatus.Text = "* Add Vendor";
-                lblStatus.ForeColor = Color.Green;
+                    txeCREATE.Text = arrVendor[21];
+                    txeCDATE.Text = arrVendor[22];
+                    txeUPDATE.Text = arrVendor[23];
+                    txeUDATE.Text = arrVendor[24];
+                    txeName.Focus();
+                }
+                else
+                {
+                    glueCode.Text = "";
+                    glueCode.Focus();
+                    lblStatus.Text = "* Add Vendor";
+                    lblStatus.ForeColor = Color.Green;
+                }
             }
             else
             {
-                lblStatus.Text = "* Edit Vendor";
-                lblStatus.ForeColor = Color.Red;
+                txeID.Text = new DBQuery("SELECT CASE WHEN ISNULL(MAX(OIDVEND), '') = '' THEN 1 ELSE MAX(OIDVEND) + 1 END AS NewNo FROM Vendor").getString();
+                lblStatus.Text = "* Add Vendor";
+                lblStatus.ForeColor = Color.Green;
+
+                bool chkNameDup = chkDuplicateName();
+                if (chkNameDup == false)
+                {
+                    txeName.Text = "";
+                }
+
+                bool chkShortDup = chkDuplicateShortName();
+                if (chkShortDup == false)
+                {
+                    txeShortName.Text = "";
+                }
             }
+            selCode = "";
+
+            //Check new vendor or edit vendor
+            //sbSQL.Clear();
+            //sbSQL.Append("SELECT OIDVEND FROM Vendor WHERE (OIDVEND = '" + txeID.Text.ToString() + "') ");
+            //string strCHKID = new DBQuery(sbSQL).getString();
+            //if (strCHKID == "")
+            //{
+            //    lblStatus.Text = "* Add Vendor";
+            //    lblStatus.ForeColor = Color.Green;
+            //}
+            //else
+            //{
+            //    lblStatus.Text = "* Edit Vendor";
+            //    lblStatus.ForeColor = Color.Red;
+            //}
         }
 
         private void gvVendor_RowCellClick(object sender, RowCellClickEventArgs e)
@@ -308,6 +308,11 @@ namespace M12
                 FUNC.msgWarning("Please input vendor name.");
                 txeName.Focus();
             }
+            else if (txeShortName.Text.Trim() == "")
+            {
+                FUNC.msgWarning("Please input vendor short name.");
+                txeShortName.Focus();
+            }
             else
             {
                 if (FUNC.msgQuiz("Confirm save data ?") == true)
@@ -326,20 +331,26 @@ namespace M12
                         strUPDATE = txeUPDATE.Text.Trim();
                     }
 
+                    string strCalendar = "0";
+                    if (glueCalendar.Text.Trim() != "")
+                    {
+                        strCalendar = glueCalendar.EditValue.ToString();
+                    }
+
                     if (lblStatus.Text == "* Add Vendor")
                     {
                         sbSQL.Append("  INSERT INTO Vendor(Code, Name, ShotName, Contacts, Email, Address1, Address2, Address3, City, Country, TelephoneNo, FaxNo, VendorType, PaymentTerm, PaymentCurrency, VendorEvaluation, CalendarNo, ProductionLeadTime, DeliveryLeadtime, ArrivalLeadTime, POCancelPeriod, Remark1, Remark2, CreatedBy, CreatedDate, UpdatedBy, UpdatedDate) ");
                         sbSQL.Append("  VALUES(N'" + glueCode.Text.Trim().Replace("'", "''") + "', N'" + txeName.Text.Trim().Replace("'", "''") + "', N'" + txeShortName.Text.Trim().Replace("'", "''") + "', N'" + txeContact.Text.Trim().Replace("'", "''") + "', N'" + txeEmail.Text.Trim() + "', N'" + txeAddr1.Text.Trim() + "', N'" + txeAddr2.Text.Trim() + "', N'" + txeAddr3.Text.Trim() + "', N'', N'" + txeCountry.Text.Trim() + "', N'" + txeTel.Text.Trim() + "', ");
-                        sbSQL.Append("         N'" + txeFax.Text.Trim() + "', '" + glueVendor.EditValue.ToString() + "', '" + slueTerm.EditValue.ToString() + "', '" + glueCurrency.EditValue.ToString() + "',  N'" + txeEval.Text.Trim() + "', '" + glueCalendar.EditValue.ToString() + "', '" + spePLT.Value.ToString() + "', '" + speDLT.Value.ToString() + "', '" + speALT.Value.ToString() + "', '" + spePCP.Value.ToString() + "', N'', N'', '" + strCREATE + "', GETDATE(), '" + strUPDATE + "', GETDATE()) ");
+                        sbSQL.Append("         N'" + txeFax.Text.Trim() + "', '" + glueVendor.EditValue.ToString() + "', '" + slueTerm.EditValue.ToString() + "', '" + glueCurrency.EditValue.ToString() + "',  N'" + txeEval.Text.Trim() + "', '" + strCalendar + "', '" + spePLT.Value.ToString() + "', '" + speDLT.Value.ToString() + "', '" + speALT.Value.ToString() + "', '" + spePCP.Value.ToString() + "', N'', N'', '" + strCREATE + "', GETDATE(), '" + strUPDATE + "', GETDATE()) ");
                     }
                     else if (lblStatus.Text == "* Edit Vendor")
                     {
                         sbSQL.Append("  UPDATE Vendor SET ");
                         sbSQL.Append("      Code=N'" + glueCode.Text.Trim().Replace("'", "''") + "', Name=N'" + txeName.Text.Trim().Replace("'", "''") + "', ShotName=N'" + txeShortName.Text.Trim().Replace("'", "''") + "', Contacts=N'" + txeContact.Text.Trim().Replace("'", "''") + "', Email=N'" + txeEmail.Text.Trim() + "', Address1=N'" + txeAddr1.Text.Trim() + "', ");
                         sbSQL.Append("      Address2=N'" + txeAddr2.Text.Trim() + "', Address3=N'" + txeAddr3.Text.Trim() + "', City=N'', Country=N'" + txeCountry.Text.Trim() + "', TelephoneNo=N'" + txeTel.Text.Trim() + "', FaxNo = N'" + txeFax.Text.Trim() + "', VendorType = '" + glueVendor.EditValue.ToString() + "', PaymentTerm = '" + slueTerm.EditValue.ToString() + "', ");
-                        sbSQL.Append("      PaymentCurrency = '" + glueCurrency.EditValue.ToString() + "', VendorEvaluation = N'" + txeEval.Text.Trim() + "', CalendarNo = '" + glueCalendar.EditValue.ToString() + "', ProductionLeadTime = '" + spePLT.Value.ToString() + "', DeliveryLeadtime = '" + speDLT.Value.ToString() + "', ArrivalLeadTime = '" + speALT.Value.ToString() + "', ");
+                        sbSQL.Append("      PaymentCurrency = '" + glueCurrency.EditValue.ToString() + "', VendorEvaluation = N'" + txeEval.Text.Trim() + "', CalendarNo = '" + strCalendar + "', ProductionLeadTime = '" + spePLT.Value.ToString() + "', DeliveryLeadtime = '" + speDLT.Value.ToString() + "', ArrivalLeadTime = '" + speALT.Value.ToString() + "', ");
                         sbSQL.Append("      POCancelPeriod = '" + spePCP.Value.ToString() + "', Remark1 = N'', Remark2 = N'', UpdatedBy = '" + strUPDATE + "', UpdatedDate = GETDATE() ");
-                        sbSQL.Append("  WHERE(OIDVEND = '" + txeID.Text.Trim() + "') ");
+                        sbSQL.Append("  WHERE (OIDVEND = '" + txeID.Text.Trim() + "') ");
                     }
 
                     //sbSQL.Append("IF NOT EXISTS(SELECT Code FROM Vendor WHERE Code = N'" + glueCode.Text.Trim().Replace("'", "''") + "') ");
@@ -608,5 +619,115 @@ namespace M12
                 LoadCode(glueCode.Text);
             }
         }
+
+        private void ribbonControl_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txeName_Leave(object sender, EventArgs e)
+        {
+            if (txeName.Text.Trim() != "")
+            {
+                txeName.Text = txeName.Text.Trim();
+                bool chkDup = chkDuplicateName();
+                if (chkDup == true)
+                {
+                    txeShortName.Focus();
+                }
+                else
+                {
+                    txeName.Text = "";
+                    txeName.Focus();
+                    FUNC.msgWarning("Duplicate vendor name. !! Please Change.");
+
+                }
+            }
+        }
+
+        private void txeShortName_Leave(object sender, EventArgs e)
+        {
+            if (txeShortName.Text.Trim() != "")
+            {
+                txeShortName.Text = txeShortName.Text.ToUpper().Trim();
+                bool chkDup = chkDuplicateShortName();
+                if (chkDup == true)
+                {
+                    txeContact.Focus();
+                }
+                else
+                {
+                    txeShortName.Text = "";
+                    txeShortName.Focus();
+                    FUNC.msgWarning("Duplicate vendor short name. !! Please Change.");
+
+                }
+            }
+        }
+
+        private bool chkDuplicateName()
+        {
+            bool chkDup = true;
+            if (txeName.Text != "")
+            {
+                txeName.Text = txeName.Text.Trim();
+
+                if (txeName.Text.Trim() != "" && lblStatus.Text == "* Add Vendor")
+                {
+                    StringBuilder sbSQL = new StringBuilder();
+                    sbSQL.Append("SELECT TOP(1) Name FROM Vendor WHERE (Name = N'" + txeName.Text.Trim().Replace("'", "''") + "') ");
+                    if (new DBQuery(sbSQL).getString() != "")
+                    {
+                        chkDup = false;
+                    }
+                }
+                else if (txeName.Text.Trim() != "" && lblStatus.Text == "* Edit Vendor")
+                {
+                    StringBuilder sbSQL = new StringBuilder();
+                    sbSQL.Append("SELECT TOP(1) OIDVEND ");
+                    sbSQL.Append("FROM Vendor ");
+                    sbSQL.Append("WHERE (Name = N'" + txeName.Text.Trim().Replace("'", "''") + "') ");
+                    string strCHK = new DBQuery(sbSQL).getString();
+                    if (strCHK != "" && strCHK != txeID.Text.Trim())
+                    {
+                        chkDup = false;
+                    }
+                }
+            }
+            return chkDup;
+        }
+
+        private bool chkDuplicateShortName()
+        {
+            bool chkDup = true;
+            if (txeShortName.Text != "")
+            {
+                txeShortName.Text = txeShortName.Text.ToUpper().Trim();
+
+                if (txeShortName.Text.Trim() != "" && lblStatus.Text == "* Add Vendor")
+                {
+                    StringBuilder sbSQL = new StringBuilder();
+                    sbSQL.Append("SELECT TOP(1) ShotName FROM Vendor WHERE (ShotName = N'" + txeShortName.Text.Trim().Replace("'", "''") + "') ");
+                    if (new DBQuery(sbSQL).getString() != "")
+                    {
+                        chkDup = false;
+                    }
+                }
+                else if (txeShortName.Text.Trim() != "" && lblStatus.Text == "* Edit Vendor")
+                {
+                    StringBuilder sbSQL = new StringBuilder();
+                    sbSQL.Append("SELECT TOP(1) OIDVEND ");
+                    sbSQL.Append("FROM Vendor ");
+                    sbSQL.Append("WHERE (ShotName = N'" + txeShortName.Text.Trim().Replace("'", "''") + "') ");
+                    string strCHK = new DBQuery(sbSQL).getString();
+                    if (strCHK != "" && strCHK != txeID.Text.Trim())
+                    {
+                        chkDup = false;
+                    }
+                }
+            }
+            return chkDup;
+        }
+
     }
 }
