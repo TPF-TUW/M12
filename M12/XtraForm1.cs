@@ -238,6 +238,7 @@ namespace M12
                 else
                 {
                     glueCode.Text = "";
+                    glueCalendar.EditValue = "";
                     glueCode.Focus();
                     lblStatus.Text = "* Add Vendor";
                     lblStatus.ForeColor = Color.Green;
@@ -248,6 +249,7 @@ namespace M12
                 txeID.Text = new DBQuery("SELECT CASE WHEN ISNULL(MAX(OIDVEND), '') = '' THEN 1 ELSE MAX(OIDVEND) + 1 END AS NewNo FROM Vendor").getString();
                 lblStatus.Text = "* Add Vendor";
                 lblStatus.ForeColor = Color.Green;
+                glueCalendar.EditValue = "";
 
                 bool chkNameDup = chkDuplicateName();
                 if (chkNameDup == false)
