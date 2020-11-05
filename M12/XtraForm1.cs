@@ -185,40 +185,7 @@ namespace M12
 
         private void glueCode_LostFocus(object sender, EventArgs e)
         {
-            if (glueCode.Text.Trim() != "" && glueCode.Text.ToUpper().Trim() != selCode)
-            {
-                glueCode.Text = glueCode.Text.ToUpper().Trim();
-                selCode = glueCode.Text;
-                LoadCode(glueCode.Text);
-                //MessageBox.Show(glueCode.Text);
-            }
-            //string gCode = glueCode.Text.ToUpper().Trim();
-
-            //if (glueCode.Text != "")
-            //{
-            //    StringBuilder sbSQLx = new StringBuilder();
-            //    sbSQLx.Append("SELECT OIDVEND FROM Vendor WHERE (Code=N'" + gCode.Replace("'", "''") + "') ");
-            //    string chkCode = new DBQuery(sbSQLx).getString();
-
-            //    if (chkCode == "")
-            //    {
-            //        sbSQLx.Clear();
-            //        sbSQLx.Append("SELECT Code, Name ");
-            //        sbSQLx.Append("FROM  Vendor ");
-            //        sbSQLx.Append("UNION ALL ");
-            //        sbSQLx.Append("SELECT N'' AS Code, N'' AS Name ");
-            //        sbSQLx.Append("UNION ALL ");
-            //        sbSQLx.Append("SELECT N'" + gCode.Replace("'", "''") + "' AS Code, N'' AS Name ");
-            //        sbSQLx.Append("ORDER BY Code, Name ");
-            //        new ObjDevEx.setGridLookUpEdit(glueCode, sbSQLx, "Code", "Code").getData(true);
-
-            //        if (gCode != "")
-            //        {
-            //            glueCode.Text = gCode;
-            //        }
-            //    }
-
-            //}
+            
 
         }
 
@@ -629,6 +596,16 @@ namespace M12
         private void bbiPrint_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             gcVendor.Print();
+        }
+
+        private void glueCode_Leave(object sender, EventArgs e)
+        {
+            if (glueCode.Text.Trim() != "" && glueCode.Text.ToUpper().Trim() != selCode)
+            {
+                glueCode.Text = glueCode.Text.ToUpper().Trim();
+                selCode = glueCode.Text;
+                LoadCode(glueCode.Text);
+            }
         }
     }
 }

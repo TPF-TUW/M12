@@ -769,6 +769,7 @@
             this.glueCode.Closed += new DevExpress.XtraEditors.Controls.ClosedEventHandler(this.glueCode_Closed);
             this.glueCode.EditValueChanged += new System.EventHandler(this.glueCode_EditValueChanged);
             this.glueCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.glueCode_KeyDown);
+            this.glueCode.Leave += new System.EventHandler(this.glueCode_Leave);
             this.glueCode.LostFocus += new System.EventHandler(this.glueCode_LostFocus);
             // 
             // gridLookUpEdit2View
