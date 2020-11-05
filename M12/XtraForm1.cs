@@ -237,6 +237,7 @@ namespace M12
                 }
                 else
                 {
+                    txeID.Text = new DBQuery("SELECT CASE WHEN ISNULL(MAX(OIDVEND), '') = '' THEN 1 ELSE MAX(OIDVEND) + 1 END AS NewNo FROM Vendor").getString();
                     glueCode.Text = "";
                     glueCalendar.EditValue = "";
                     glueCode.Focus();
