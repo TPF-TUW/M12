@@ -462,6 +462,8 @@
             this.gridLookUpEdit4View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridLookUpEdit4View.Name = "gridLookUpEdit4View";
             this.gridLookUpEdit4View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridLookUpEdit4View.OptionsView.EnableAppearanceEvenRow = true;
+            this.gridLookUpEdit4View.OptionsView.EnableAppearanceOddRow = true;
             this.gridLookUpEdit4View.OptionsView.ShowGroupPanel = false;
             // 
             // txeEval
@@ -494,6 +496,8 @@
             this.gridLookUpEdit3View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridLookUpEdit3View.Name = "gridLookUpEdit3View";
             this.gridLookUpEdit3View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridLookUpEdit3View.OptionsView.EnableAppearanceEvenRow = true;
+            this.gridLookUpEdit3View.OptionsView.EnableAppearanceOddRow = true;
             this.gridLookUpEdit3View.OptionsView.ShowGroupPanel = false;
             // 
             // slueTerm
@@ -515,6 +519,8 @@
             this.searchLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.searchLookUpEdit1View.Name = "searchLookUpEdit1View";
             this.searchLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.searchLookUpEdit1View.OptionsView.EnableAppearanceEvenRow = true;
+            this.searchLookUpEdit1View.OptionsView.EnableAppearanceOddRow = true;
             this.searchLookUpEdit1View.OptionsView.ShowGroupPanel = false;
             // 
             // glueVendor
@@ -555,6 +561,8 @@
             this.gridLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             this.gridLookUpEdit1View.Name = "gridLookUpEdit1View";
             this.gridLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridLookUpEdit1View.OptionsView.EnableAppearanceEvenRow = true;
+            this.gridLookUpEdit1View.OptionsView.EnableAppearanceOddRow = true;
             this.gridLookUpEdit1View.OptionsView.ShowGroupPanel = false;
             // 
             // txeUDATE
